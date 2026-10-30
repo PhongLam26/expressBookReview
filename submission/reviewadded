@@ -9,13 +9,13 @@ curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' http://127.0.0.1:5000/review/8
 
 OUTPUT (captured from curl.exe):
 ADD REVIEW:
-{"message":"Review added successfully","isbn":"8","username":"bookreview_reader_20261030","review":"An engaging classic with memorable characters."}
+{"message":"Review added successfully","isbn":"8","username":"bookreview_reader_retake_20261030","review":"An engaging classic with memorable characters."}
 HTTP_STATUS:201
 
 UPDATE SAME REVIEW:
-{"message":"Review updated successfully","isbn":"8","username":"bookreview_reader_20261030","review":"The vivid characters and careful pacing make this story memorable."}
+{"message":"Review updated successfully","isbn":"8","username":"bookreview_reader_retake_20261030","review":"The vivid characters and careful pacing make this story memorable."}
 HTTP_STATUS:200
 
 GET REVIEW AFTER UPDATE:
-{"bookreview_reader_20261030":"The vivid characters and careful pacing make this story memorable."}
+{"bookreview_reader_retake_20261030":"The vivid characters and careful pacing make this story memorable."}
 HTTP_STATUS:200

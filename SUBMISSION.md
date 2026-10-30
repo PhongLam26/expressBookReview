@@ -23,10 +23,11 @@ https://github.com/PhongLam26/expressBookReview
 cURL command and actual output excerpt from the public GitHub API response:
 
 ~~~powershell
-curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' https://api.github.com/repos/PhongLam26/expressBookReview
+curl.exe -sS -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' https://api.github.com/repos/PhongLam26/expressBookReview | jq '.parent.full_name'
 ~~~
 
-~~~json{"full_name":"PhongLam26/expressBookReview","html_url":"https://github.com/PhongLam26/expressBookReview","fork":true,"parent_full_name":"ibm-developer-skills-network/expressBookReviews","default_branch":"main","HTTP_STATUS":200}
+~~~text
+"ibm-developer-skills-network/expressBookReviews"
 ~~~
 
 Full fork and remote details: [submission/githubrepo](submission/githubrepo).
@@ -96,7 +97,7 @@ curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' -X POST -H 'Content-Type: applicati
 ~~~
 
 ~~~text
-{"message":"User successfully registered","username":"bookreview_reader_20261030"}
+{"message":"User successfully registered","username":"bookreview_reader_retake_20261030"}
 HTTP_STATUS:201
 ~~~
 
@@ -110,7 +111,7 @@ curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' -X POST -H 'Content-Type: applicati
 ~~~
 
 ~~~text
-{"message":"User successfully logged in","username":"bookreview_reader_20261030","token":"[REDACTED]"}
+{"message":"Login successful!","username":"bookreview_reader_retake_20261030","token":"[REDACTED]"}
 HTTP_STATUS:200
 
 SECURITY: The live JWT was used for the authenticated requests and redacted from this committed evidence.
@@ -134,15 +135,15 @@ curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' http://127.0.0.1:5000/review/8
 
 ~~~text
 ADD REVIEW:
-{"message":"Review added successfully","isbn":"8","username":"bookreview_reader_20261030","review":"An engaging classic with memorable characters."}
+{"message":"Review added successfully","isbn":"8","username":"bookreview_reader_retake_20261030","review":"An engaging classic with memorable characters."}
 HTTP_STATUS:201
 
 UPDATE SAME REVIEW:
-{"message":"Review updated successfully","isbn":"8","username":"bookreview_reader_20261030","review":"The vivid characters and careful pacing make this story memorable."}
+{"message":"Review updated successfully","isbn":"8","username":"bookreview_reader_retake_20261030","review":"The vivid characters and careful pacing make this story memorable."}
 HTTP_STATUS:200
 
 GET REVIEW AFTER UPDATE:
-{"bookreview_reader_20261030":"The vivid characters and careful pacing make this story memorable."}
+{"bookreview_reader_retake_20261030":"The vivid characters and careful pacing make this story memorable."}
 HTTP_STATUS:200
 ~~~
 
@@ -159,7 +160,7 @@ curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' http://127.0.0.1:5000/review/8
 
 ~~~text
 DELETE REVIEW:
-{"message":"Review deleted successfully","isbn":"8","username":"bookreview_reader_20261030"}
+{"message":"Review deleted successfully","isbn":"8","username":"bookreview_reader_retake_20261030"}
 HTTP_STATUS:200
 
 GET REVIEW AFTER DELETE:
@@ -171,13 +172,13 @@ Evidence file: [submission/deletereview](submission/deletereview).
 
 ## Question 11 — Asynchronous requests
 
-general.js implements the public book routes with Promise-backed data lookups and async/await. The ISBN, author, title, review, and list routes call the same asynchronous helpers against the supplied catalog, so the implementation is exercised by the running Express server.
+general.js implements the public book routes with Promise-backed data lookups and async/await. It also exports Axios client functions and a CLI for the live server: `node router/general.js all`, `node router/general.js isbn 8`, `node router/general.js author "Jane Austen"`, and `node router/general.js title "Pride and Prejudice"`. All four commands were run successfully against the Express server.
 
 Public GitHub URL: https://github.com/PhongLam26/expressBookReview/blob/main/final_project/router/general.js
 
 ## Verification summary
 
-- npm install completed; npm audit reported 0 vulnerabilities after updating the starter’s jsonwebtoken and nodemon versions.
+- npm install completed, including Axios; npm audit reported 0 vulnerabilities.
 - node --check passed for index.js, router/auth_users.js, and router/general.js.
 - All listed cURL requests ran against the local server and returned the recorded HTTP statuses and JSON.
 - Review behavior was verified as add (201), update (200), query updated text (200), delete (200), and query empty object after deletion (200).

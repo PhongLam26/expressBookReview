@@ -1,19 +1,5 @@
-FORK COMMAND (executed with GitHub CLI):
-gh repo fork https://github.com/ibm-developer-skills-network/expressBookReviews --fork-name expressBookReview
+CURL COMMAND:
+curl.exe -sS -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' https://api.github.com/repos/PhongLam26/expressBookReview | jq '.parent.full_name'
 
 OUTPUT:
-https://github.com/PhongLam26/expressBookReview
-
-CURL COMMAND:
-curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' https://api.github.com/repos/PhongLam26/expressBookReview
-
-OUTPUT (selected fields parsed from the actual public GitHub API cURL response):
-{"full_name":"PhongLam26/expressBookReview","html_url":"https://github.com/PhongLam26/expressBookReview","fork":true,"parent_full_name":"ibm-developer-skills-network/expressBookReviews","default_branch":"main","HTTP_STATUS":200}
-
-LOCAL GIT REMOTES (current checkout):
-origin	https://github.com/PhongLam26/expressBookReview.git (fetch)
-origin	https://github.com/PhongLam26/expressBookReview.git (push)
-upstream	https://github.com/ibm-developer-skills-network/expressBookReviews.git (fetch)
-upstream	https://github.com/ibm-developer-skills-network/expressBookReviews.git (push)
-
-SOURCE NOTE: The requested singular upstream path returned GitHub HTTP 404. The live IBM repository is expressBookReviews (plural), and this account fork keeps the requested local/fork name expressBookReview.
+"ibm-developer-skills-network/expressBookReviews"

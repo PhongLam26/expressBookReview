@@ -6,7 +6,7 @@ curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' http://127.0.0.1:5000/review/8
 
 OUTPUT (captured from curl.exe):
 DELETE REVIEW:
-{"message":"Review deleted successfully","isbn":"8","username":"bookreview_reader_20261030"}
+{"message":"Review deleted successfully","isbn":"8","username":"bookreview_reader_retake_20261030"}
 HTTP_STATUS:200
 
 GET REVIEW AFTER DELETE:

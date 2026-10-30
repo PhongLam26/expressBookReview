@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
@@ -22,6 +23,31 @@ const getBooksByTitleAsync = (title) => {
 const getBookReviewAsync = (isbn) => asyncResult(books[isbn] ? books[isbn].reviews : null);
 const asyncRoute = (handler) => (req, res, next) => {
   Promise.resolve(handler(req, res, next)).catch(next);
+};
+
+// Axios client for the asynchronous assignment tasks. These helpers call the
+// running Express API, so they can be used from another process or the CLI.
+const bookApi = axios.create({
+  baseURL: process.env.BOOK_API_BASE_URL || `http://127.0.0.1:${process.env.PORT || 5000}`,
+  timeout: 5000
+});
+const getAllBooks = async () => (await bookApi.get('/')).data;
+const getBooksByISBN = async (isbn) =>
+  (await bookApi.get(`/isbn/${encodeURIComponent(isbn)}`)).data;
+const getBooksByAuthor = async (author) =>
+  (await bookApi.get(`/author/${encodeURIComponent(author)}`)).data;
+const getBooksByTitle = async (title) =>
+  (await bookApi.get(`/title/${encodeURIComponent(title)}`)).data;
+const axiosQueries = { all: getAllBooks, isbn: getBooksByISBN, author: getBooksByAuthor, title: getBooksByTitle };
+
+const runAxiosQuery = async () => {
+  const [query, ...values] = process.argv.slice(2);
+  const value = values.join(' ');
+  const handler = axiosQueries[query];
+  if (!handler || (query !== 'all' && !value)) {
+    throw new Error('Usage: node router/general.js <all|isbn|author|title> [value]');
+  }
+  return handler(value);
 };
 
 
@@ -78,3 +104,15 @@ module.exports.asyncQueries = {
   getBooksByTitleAsync,
   getBookReviewAsync
 };
+module.exports.axiosQueries = axiosQueries;
+
+if (require.main === module) {
+  runAxiosQuery()
+    .then((data) => console.log(JSON.stringify(data, null, 2)))
+    .catch((error) => {
+      const status = error.response && error.response.status;
+      const message = error.response?.data?.message || error.message;
+      console.error(JSON.stringify({ message, ...(status ? { status } : {}) }));
+      process.exitCode = 1;
+    });
+}

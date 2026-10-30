@@ -3,7 +3,7 @@ $loginBody = @{ username = $env:BOOKSTORE_TEST_USERNAME; password = $env:BOOKSTO
 curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' -X POST -H 'Content-Type: application/json' --data-raw $loginBody http://127.0.0.1:5000/customer/login
 
 OUTPUT (captured from curl.exe):
-{"message":"User successfully logged in","username":"bookreview_reader_20261030","token":"[REDACTED]"}
+{"message":"Login successful!","username":"bookreview_reader_retake_20261030","token":"[REDACTED]"}
 HTTP_STATUS:200
 
-SECURITY: The live JWT was used for the authenticated requests and redacted from this committed evidence.
+SECURITY: Live JWT redacted from saved evidence.

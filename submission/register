@@ -3,5 +3,5 @@ $registerBody = @{ username = $env:BOOKSTORE_TEST_USERNAME; password = $env:BOOK
 curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' -X POST -H 'Content-Type: application/json' --data-raw $registerBody http://127.0.0.1:5000/register
 
 OUTPUT (captured from curl.exe):
-{"message":"User successfully registered","username":"bookreview_reader_20261030"}
+{"message":"User successfully registered","username":"bookreview_reader_retake_20261030"}
 HTTP_STATUS:201

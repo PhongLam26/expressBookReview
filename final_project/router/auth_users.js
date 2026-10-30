@@ -26,7 +26,7 @@ regd_users.post('/login', (req, res) => {
   req.session.username = username;
   return req.session.save((error) => {
     if (error) return res.status(500).json({ message: 'Could not create login session' });
-    return res.status(200).json({ message: 'User successfully logged in', username, token });
+    return res.status(200).json({ message: 'Login successful!', username, token });
   });
 });
 
