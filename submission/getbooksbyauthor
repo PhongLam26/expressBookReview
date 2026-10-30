@@ -1,0 +1,6 @@
+COMMAND (PowerShell):
+curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' 'http://127.0.0.1:5000/author/Jane%20Austen'
+
+OUTPUT (captured from curl.exe):
+{"8":{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}}}
+HTTP_STATUS:200

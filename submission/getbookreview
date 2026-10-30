@@ -1,0 +1,6 @@
+COMMAND (PowerShell):
+curl.exe -sS -w '\nHTTP_STATUS:%{http_code}' http://127.0.0.1:5000/review/8
+
+OUTPUT (captured from curl.exe):
+{}
+HTTP_STATUS:200
